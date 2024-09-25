@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FirstApp.Data;
+using FirstApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,19 @@ namespace FirstApp.View
     /// </summary>
     public partial class CustomerView : UserControl
     {
+        private readonly CustomersViewModel _viewModel;
+
         public CustomerView()
         {
             InitializeComponent();
+            _viewModel = new CustomersViewModel(new CustomerDataProvider());
+            DataContext = _viewModel;
+            Loaded += CustomersViewLoad;
+        }
+
+        private async void CustomersViewLoad(object sender, RoutedEventArgs e)
+        {
+           await _viewModel.LoadAsync();
         }
 
         private void ButtonMoveNavigation_Click(object sender, RoutedEventArgs e)
@@ -33,10 +45,17 @@ namespace FirstApp.View
 
 
             // Using Grid Static Method 
-            var column = Grid.GetColumn(CustomerListGrid);
-            int newColumn = column == 0 ? 2 : 0;
-            Grid.SetColumn(CustomerListGrid, newColumn);
+            //var column = Grid.GetColumn(CustomerListGrid);
+            //int newColumn = column == 0 ? 2 : 0;
+            //Grid.SetColumn(CustomerListGrid, newColumn);
+
+            _viewModel.MoveNavigation();
+
         }
 
+        private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            await _viewModel.Add();
+        }
     }
 }
