@@ -3,11 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FirstApp" 
+        xmlns:ViewModel="clr-namespace:FirstApp.ViewModel" 
         xmlns:controls="clr-namespace:FirstApp.Controls" xmlns:view="clr-namespace:FirstApp.View"
         mc:Ignorable="d"
        d:DesignWidth="700"  Title="MainWindow" Height="500" Width="800">
+    <Window.Resources>
+        <!-- Explicite  Using Data Templete-->
+
+        <!--<DataTemplate x:Key="CustomersViewModelTemplet">
+            <view:CustomerView />
+        </DataTemplate>-->
+
+        <!-- Implecite Using Data Templete-->
+
+        <DataTemplate DataType="{x:Type ViewModel:CustomersViewModel}">
+            <view:CustomerView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type ViewModel:ProductsViewModel}">
+            <view:ProductsView />
+        </DataTemplate>
+    </Window.Resources>
+    
     <Grid>
+
         
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -17,10 +36,14 @@
         </Grid.RowDefinitions>
 
         <!-- Main Menu -->
-        <Menu FontSize="20"  Grid.Row="0">
+        <Menu FontSize="20">
             <MenuItem Header="_View">
-                <MenuItem Header="_Customers"></MenuItem>
-                <MenuItem Header="_Products"></MenuItem>
+                <MenuItem Header="_Customers"
+                Command="{Binding SelectViewModelCommand}"
+                CommandParameter="{Binding CustomersViewModel}"/>
+                <MenuItem Header="_Products"
+                Command="{Binding SelectViewModelCommand}"
+                CommandParameter="{Binding ProductsViewModel}"/>
             </MenuItem>
         </Menu>
 
@@ -28,7 +51,23 @@
         <controls:HeaderControl Grid.Row="1" />
 
         <!-- Customer View -->
-        <view:CustomerView Grid.Row="2" />
+        <!--<view:CustomerView DataContext="{Binding SelectedViewModel}" Grid.Row="2" />-->
+
+        <!-- Explicite  Using Data Templete-->
+        
+        <!--<ContentControl Content="{Binding SelectedViewModel}" Grid.Row="2" >
+            <ContentControl.ContentTemplate>
+                <DataTemplate>
+                    <view:CustomerView />
+                </DataTemplate>
+            </ContentControl.ContentTemplate>
+        </ContentControl>-->
+
+        <!--<ContentControl Content="{Binding SelectedViewModel}" ContentTemplate="{StaticResource CustomersViewModelTemplet}" Grid.Row="2" />-->
+
+        <!-- Implecite Using Data Templete-->
+        <ContentControl Content="{Binding SelectedViewModel}"  Grid.Row="2" />
+
 
         <!-- Statusbar -->
         <StatusBar Grid.Row="3"  >

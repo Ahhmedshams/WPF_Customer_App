@@ -22,20 +22,12 @@ namespace FirstApp.View
     /// </summary>
     public partial class CustomerView : UserControl
     {
-        private readonly CustomersViewModel _viewModel;
 
         public CustomerView()
         {
             InitializeComponent();
-            _viewModel = new CustomersViewModel(new CustomerDataProvider());
-            DataContext = _viewModel;
-            Loaded += CustomersViewLoad;
         }
 
-        private async void CustomersViewLoad(object sender, RoutedEventArgs e)
-        {
-           await _viewModel.LoadAsync();
-        }
 
         //private void ButtonMoveNavigation_Click(object sender, RoutedEventArgs e)
         //{
