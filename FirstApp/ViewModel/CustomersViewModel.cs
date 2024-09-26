@@ -31,6 +31,7 @@ public class CustomersViewModel : ViewModelBase
         set {
             _selectedCustomer = value;
             RaisePropertyChanged();
+            RaisePropertyChanged(nameof(IsSelectedCustomer));
             DeleteCommand.RaiseCanExecuteChanged();
         }
     }
@@ -47,6 +48,8 @@ public class CustomersViewModel : ViewModelBase
     public DelegateCommand AddCommand { get; }
     public DelegateCommand MoveNavigationCommand { get; }
     public DelegateCommand DeleteCommand { get; }
+
+    public bool IsSelectedCustomer { get => _selectedCustomer != null; } 
     public async Task LoadAsync()
     {
         if (Customers.Any())

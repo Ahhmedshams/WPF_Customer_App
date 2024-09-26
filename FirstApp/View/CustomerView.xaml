@@ -46,7 +46,7 @@
         </Grid>
 
         <!-- Customer detail -->
-        <StackPanel Margin="10" Grid.Column="1" >
+        <StackPanel Margin="10" Grid.Column="1" Visibility="{Binding IsSelectedCustomer , Converter= {StaticResource BooleanToVisibilityConv}}" >
             <Label>Firstname:</Label>
             <TextBox Text="{Binding 
                 Path=SelectedCustomer.FirstName,
