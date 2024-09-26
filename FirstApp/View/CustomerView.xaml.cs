@@ -37,25 +37,25 @@ namespace FirstApp.View
            await _viewModel.LoadAsync();
         }
 
-        private void ButtonMoveNavigation_Click(object sender, RoutedEventArgs e)
-        {
-            //var column = (int)CustomerListGrid.GetValue(Grid.ColumnProperty);
-            //  var newColumn = column == 0 ? 2 : 0;
-            //  CustomerListGrid.SetValue(Grid.ColumnProperty, newColumn);
+        //private void ButtonMoveNavigation_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //var column = (int)CustomerListGrid.GetValue(Grid.ColumnProperty);
+        //    //  var newColumn = column == 0 ? 2 : 0;
+        //    //  CustomerListGrid.SetValue(Grid.ColumnProperty, newColumn);
 
 
-            // Using Grid Static Method 
-            //var column = Grid.GetColumn(CustomerListGrid);
-            //int newColumn = column == 0 ? 2 : 0;
-            //Grid.SetColumn(CustomerListGrid, newColumn);
+        //    // Using Grid Static Method 
+        //    //var column = Grid.GetColumn(CustomerListGrid);
+        //    //int newColumn = column == 0 ? 2 : 0;
+        //    //Grid.SetColumn(CustomerListGrid, newColumn);
 
-            _viewModel.MoveNavigation();
+        //    _viewModel.MoveNavigation();
 
-        }
+        //}
 
-        private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
-        {
-            await _viewModel.Add();
-        }
+        //private async void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        //{
+        //    await _viewModel.Add();
+        //}
     }
 }

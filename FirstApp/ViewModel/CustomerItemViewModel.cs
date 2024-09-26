@@ -2,13 +2,10 @@
 
 namespace FirstApp.ViewModel;
 
-public class CustomerItemViewModel : ViewModelBase
+public class CustomerItemViewModel(Customer model) : ViewModelBase
 {
-    private readonly Customer _model;
-    public CustomerItemViewModel(Customer model)
-    {
-        _model = model;
-    }
+    private readonly Customer _model = model;
+
     public int Id => _model.Id;
 
     public string? FirstName

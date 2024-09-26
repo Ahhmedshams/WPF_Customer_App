@@ -1,4 +1,5 @@
-﻿using FirstApp.Data;
+﻿using FirstApp.Command;
+using FirstApp.Data;
 using FirstApp.Model;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -8,11 +9,20 @@ using System.Windows.Navigation;
 
 namespace FirstApp.ViewModel;
 
-public class CustomersViewModel(ICustomerDataProvider customerDataProvider) : ViewModelBase
+public class CustomersViewModel : ViewModelBase
 {
-    private readonly ICustomerDataProvider _customerDataProvider = customerDataProvider;
+    private readonly ICustomerDataProvider _customerDataProvider;
     private CustomerItemViewModel _selectedCustomer;
     private NavigationSide _navigationSide;
+
+
+    public CustomersViewModel(ICustomerDataProvider customerDataProvider)
+    {
+        _customerDataProvider = customerDataProvider;
+        AddCommand = new DelegateCommand(Add);
+        MoveNavigationCommand = new DelegateCommand(MoveNavigation);
+        DeleteCommand = new DelegateCommand(Delete,CanDelete);
+    }
 
     public ObservableCollection<CustomerItemViewModel> Customers { get; } = [];
     public CustomerItemViewModel SelectedCustomer
@@ -21,6 +31,7 @@ public class CustomersViewModel(ICustomerDataProvider customerDataProvider) : Vi
         set {
             _selectedCustomer = value;
             RaisePropertyChanged();
+            DeleteCommand.RaiseCanExecuteChanged();
         }
     }
     public NavigationSide NavigationSide
@@ -33,6 +44,9 @@ public class CustomersViewModel(ICustomerDataProvider customerDataProvider) : Vi
         }
     }
 
+    public DelegateCommand AddCommand { get; }
+    public DelegateCommand MoveNavigationCommand { get; }
+    public DelegateCommand DeleteCommand { get; }
     public async Task LoadAsync()
     {
         if (Customers.Any())
@@ -50,15 +64,24 @@ public class CustomersViewModel(ICustomerDataProvider customerDataProvider) : Vi
         }
     }
 
-    public Task Add()
+    private void Add(object? parameter)
     {
         var newCustomer = new CustomerItemViewModel( new Customer (){ FirstName = "new" });
         Customers.Add(newCustomer);
         SelectedCustomer = newCustomer;
-        return Task.CompletedTask;
     }
+    private void Delete(object? parameter)
+    {
+       if(SelectedCustomer is not null)
+        {
+            Customers?.Remove(SelectedCustomer);
+            SelectedCustomer = null;
+        }
 
-    internal void MoveNavigation()
+    }
+    private bool CanDelete(object? parameter) => SelectedCustomer is not null;
+    
+    private void MoveNavigation(object? parameter)
     {
         NavigationSide = NavigationSide == NavigationSide.Left
         ? NavigationSide.Right
