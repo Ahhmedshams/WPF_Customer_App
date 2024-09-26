@@ -20,11 +20,11 @@ namespace FirstApp
     {
         private readonly MainViewModel _viewModel;
 
-        public MainWindow()
+        public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
-            _viewModel = new MainViewModel(new CustomersViewModel(new CustomerDataProvider()), new());
-            DataContext = _viewModel;
+            _viewModel = viewModel;
+            DataContext = viewModel;
             Loaded += MainWindow_Loaded;
         }
 
