@@ -9,7 +9,7 @@ using System.Windows.Navigation;
 
 namespace FirstApp.ViewModel;
 
-public class CustomersViewModel : ViewModelBase
+public class CustomersViewModel : ValidationViewModelBase
 {
     private readonly ICustomerDataProvider _customerDataProvider;
     private CustomerItemViewModel _selectedCustomer;
