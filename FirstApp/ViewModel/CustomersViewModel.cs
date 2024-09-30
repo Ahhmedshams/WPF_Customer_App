@@ -78,7 +78,7 @@ public class CustomersViewModel : ValidationViewModelBase
        if(SelectedCustomer is not null)
         {
             Customers?.Remove(SelectedCustomer);
-            SelectedCustomer = null;
+            SelectedCustomer = null!;
         }
 
     }

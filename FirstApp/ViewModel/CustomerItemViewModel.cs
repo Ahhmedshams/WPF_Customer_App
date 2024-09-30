@@ -2,7 +2,7 @@
 
 namespace FirstApp.ViewModel;
 
-public class CustomerItemViewModel(Customer model) : ViewModelBase
+public class CustomerItemViewModel(Customer model) : ValidationViewModelBase
 {
     private readonly Customer _model = model;
 
@@ -15,6 +15,15 @@ public class CustomerItemViewModel(Customer model) : ViewModelBase
         {
             _model.FirstName = value;
             RaisePropertyChanged();
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                AddError("First Name is Required");
+            }
+            else
+            {
+                ClearErrors();
+            }
         }
     }
 
